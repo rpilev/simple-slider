@@ -32,10 +32,10 @@
 
     setUpStructure.call(this);
 
-    document.getElementsByClassName("arrow-container-left")[0].addEventListener('click', function () {
+    document.getElementById(this.options.targetId).getElementsByClassName("arrow-container-left")[0].addEventListener('click', function () {
       navigateSlider.call(this, 'previous');
     }.bind(this));
-    document.getElementsByClassName("arrow-container-right")[0].addEventListener('click', function () {
+    document.getElementById(this.options.targetId).getElementsByClassName("arrow-container-right")[0].addEventListener('click', function () {
       navigateSlider.call(this, 'next');
     }.bind(this));
 
@@ -69,13 +69,13 @@
       img.style.opacity = '0';
     }
 
-    document.getElementsByClassName('slider-img-container')[0].appendChild(img);
+    document.getElementById(this.options.targetId).getElementsByClassName('slider-img-container')[0].appendChild(img);
 
     //when the first image is loaded remove the loader overlay
     if(index === 0){
       img.onload = function() { 
-        document.getElementsByClassName('slider-loader')[0].style.opacity = '0';    
-      }
+        document.getElementById(this.options.targetId).getElementsByClassName('slider-loader')[0].style.opacity = '0';    
+      }.bind(this);
     }
   }
 
@@ -107,19 +107,20 @@
       }
     }
 
-    document.querySelectorAll('[data-index="'+this.current_index+'"]')[0].style.opacity = '0';
+    document.getElementById(this.options.targetId).querySelectorAll('[data-index="'+this.current_index+'"]')[0].style.opacity = '0';
 
-    var all_images = document.getElementsByClassName('slider-img');
+    var all_images = document.getElementById(this.options.targetId).getElementsByClassName('slider-img');
 
     setTimeout(function() { 
       Array.prototype.forEach.call(all_images, function(image) {
         image.style.display = 'none';
       });
-      document.querySelectorAll('[data-index="'+new_index+'"]')[0].style.display = 'block';
-    }, 500);
-     setTimeout(function() { 
-      document.querySelectorAll('[data-index="'+new_index+'"]')[0].style.opacity = '1';
-    }, 550); 
+      document.getElementById(this.options.targetId).querySelectorAll('[data-index="'+new_index+'"]')[0].style.display = 'block';
+    }.bind(this), 500);
+
+    setTimeout(function() { 
+      document.getElementById(this.options.targetId).querySelectorAll('[data-index="'+new_index+'"]')[0].style.opacity = '1';
+    }.bind(this), 550); 
 
     this.current_index = new_index;
   }
